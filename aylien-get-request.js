@@ -4,16 +4,18 @@
 var requestLib = require("request");
 var credentials = require("./credentials");
 
+function createHeaders() {
+  return {
+    "X-AYLIEN-TextAPI-Application-ID": credentials.aylien().applicationId,
+    "X-AYLIEN-TextAPI-Application-Key": credentials.aylien().key
+  };
+};
+
 module.exports = function aylienGetRequest(apiRequestUrl) {
   if (apiRequestUrl == null) {
     throw new Error("Need an API request URL");
   }
 
-  var headers = {
-    "X-AYLIEN-TextAPI-Application-ID": credentials.aylien().applicationId,
-    "X-AYLIEN-TextAPI-Application-Key": credentials.aylien().key
-  };
-
   return requestLib
-    .get({ url: apiRequestUrl, headers: headers });
+    .get({ url: apiRequestUrl, headers: createHeaders() });
 };
