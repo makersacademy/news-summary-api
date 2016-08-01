@@ -10,6 +10,10 @@ module.exports = function guardianGetRequest(apiRequestUrl) {
     throw new Error("Need an API request URL");
   }
 
+  if (!apiRequestUrl.match(/^http:\/\/content\.guardianapis\.com/)) {
+    throw new Error("apiRequestUrl must start with http://content.guardianapis.com");
+  }
+
   var authenticatedUrl = appendQuery(apiRequestUrl, { "api-key": credentials.guardian().key })
   return requestLib.get(authenticatedUrl);
 };

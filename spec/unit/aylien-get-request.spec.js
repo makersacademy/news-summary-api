@@ -7,6 +7,12 @@ describe("aylienGetRequest", function() {
     }).toThrow("Need an API request URL");
   });
 
+  it("should throw if request not to Aylien domain", function() {
+    expect(function() {
+      require("../../aylien-get-request")("http://somewhereelse.com");
+    }).toThrow("apiRequestUrl must start with https://api.aylien.com");
+  });
+
   it("should make get request to aylien URL with API key", function() {
     var requestMock = jasmine.createSpyObj("request", ["get"]);
 

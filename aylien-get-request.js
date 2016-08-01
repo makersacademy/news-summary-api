@@ -16,6 +16,10 @@ module.exports = function aylienGetRequest(apiRequestUrl) {
     throw new Error("Need an API request URL");
   }
 
+  if (!apiRequestUrl.match(/^https:\/\/api\.aylien\.com/)) {
+    throw new Error("apiRequestUrl must start with https://api.aylien.com");
+  }
+
   return requestLib
     .get({ url: apiRequestUrl, headers: createHeaders() });
 };

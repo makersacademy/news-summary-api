@@ -7,6 +7,12 @@ describe("guardianGetRequest", function() {
     }).toThrow("Need an API request URL");
   });
 
+  it("should throw if request not to Guardian API domain", function() {
+    expect(function() {
+      require("../../guardian-get-request")("http://somewhereelse.com");
+    }).toThrow("apiRequestUrl must start with http://content.guardianapis.com");
+  });
+
   it("should make get request to guardian URL with API key", function() {
     var requestMock = jasmine.createSpyObj("request", ["get"]);
 
