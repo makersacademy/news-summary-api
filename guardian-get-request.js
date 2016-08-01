@@ -5,6 +5,10 @@ var requestLib = require("request");
 var appendQuery = require("append-query");
 var credentials = require("./credentials");
 
+function authenticateUrl(apiRequestUrl) {
+  return appendQuery(apiRequestUrl, { "api-key": credentials.guardian().key })
+};
+
 module.exports = function guardianGetRequest(apiRequestUrl) {
   if (apiRequestUrl == null) {
     throw new Error("Need an API request URL");
@@ -14,6 +18,5 @@ module.exports = function guardianGetRequest(apiRequestUrl) {
     throw new Error("apiRequestUrl must start with http://content.guardianapis.com");
   }
 
-  var authenticatedUrl = appendQuery(apiRequestUrl, { "api-key": credentials.guardian().key })
-  return requestLib.get(authenticatedUrl);
+  return requestLib.get(authenticateUrl(apiRequestUrl));
 };
